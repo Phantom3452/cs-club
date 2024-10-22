@@ -1,17 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from '../components/Navbar/NavBar';
 import heroImg from '../images/Hero.png';
 
 const Hero = () => {
     const [isAnimating, setIsAnimating] = useState(false);
+    const [isImageVisible, setIsImageVisible] = useState(false);
 
     const handleGetStartedClick = () => {
         setIsAnimating(true);
-      
         setTimeout(() => {
             window.location.href = '/Contact'; 
         }, 1000); 
     };
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsImageVisible(true);
+        }, 100); // Delay to ensure the image fade-in starts after the component mounts
+
+        return () => clearTimeout(timer);
+    }, []);
 
     return (
         <div className={`hero ${isAnimating ? 'animate-fade-out' : ''}`} id='hero'>
@@ -40,7 +48,7 @@ const Hero = () => {
                             </button>
                         </div>
                     </div>
-                    <div className="flex lg:justify-end w-full lg:w-1/2" data-aos="fade-up" data-aos-delay="700">
+                    <div className={`flex lg:justify-end w-full lg:w-1/2 ${isImageVisible ? 'animate-fade-in' : 'opacity-0'}`} data-aos="fade-up" data-aos-delay="700">
                         <img alt="card img" className="rounded-t float-right duration-1000 w-full" src={heroImg} />
                     </div>
                 </div>
@@ -53,12 +61,25 @@ const Hero = () => {
                     }
                     100% {
                         opacity: 0;
-                        transform: translateX(-100%); /* Move to the left */
-                        background-color: red; /* Fade color */
+                        transform: translateX(-100%);
+                        background-color: white; 
                     }
                 }
                 .animate-fade-out {
-                    animation: fadeOut 1s forwards; /* Adjust duration as needed */
+                    animation: fadeOut 1s forwards; 
+                }
+                @keyframes fadeIn {
+                    0% {
+                        opacity: 0;
+                        transform: translateX(-50%); /* Start off-screen to the left */
+                    }
+                    100% {
+                        opacity: 1;
+                        transform: translateX(0); /* End in place */
+                    }
+                }
+                .animate-fade-in {
+                    animation: fadeIn 1s forwards; 
                 }
             `}</style>
         </div>
