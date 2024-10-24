@@ -5,6 +5,7 @@ import Hero from '../components/Hero';
 import Intro from '../components/Intro';
 import Portfolio from '../components/Portfolio';
 import Services from '../components/Services';
+import Competitions from '../components/Competitions';
 
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
         <>
             <Hero />
             <Intro />
+            <Competitions />
             <Services />
             <Portfolio />
             <Cta/>
@@ -22,4 +24,3 @@ const Home = () => {
 }
 
 export default Home;
-
